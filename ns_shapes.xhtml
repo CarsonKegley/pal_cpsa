@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<!-- CPSA 4.4.6 -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>Needham-Schroeder Demo June 2025</title>
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+ <style>
+  svg.diagram { border-width: 1px; border-style: solid }
+ </style>
+</head>
+<body>
+
+<pre>(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;Extracted shapes&quot;)
+(herald &quot;Needham-Schroeder Demo June 2025&quot;
+  (comment &quot;Example of analyzing NS.&quot;))
+(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;All input read from ns.scm&quot;)</pre>
+
+<p id="top">Trees: <a href="#t0">0</a> <a href="#t3">3</a>.</p>
+
+<p id="t0">Tree <a href="#top">0</a>, POV <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 79.920' font-size='12.000'>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k2&quot;, &quot;_self&quot;)'>2</text>
+  <line
+   x1='39.960' y1='39.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k0&quot;, &quot;_self&quot;)'>0</text>
+  </svg></div>
+
+<pre>(defprotocol ns basic
+  (defrole initiator
+    (vars (nonce_a nonce_b data) (name_a name_b name))
+    (trace (send (enc nonce_a name_a (pubk name_b)))
+      (recv (enc nonce_a nonce_b name_b (pubk name_a)))
+      (send (enc nonce_b (pubk name_b)))))
+  (defrole responder
+    (vars (nonce_a nonce_b data) (name_a name_b name))
+    (trace (recv (enc nonce_a name_a (pubk name_b)))
+      (send (enc nonce_a nonce_b name_b (pubk name_a)))
+      (recv (enc nonce_b (pubk name_b)))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))</pre>
+
+<p id="k0">Item <a href="#t0">0</a>, Child: <a href="#k2">2</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 304.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>(enc nonce_b (pubk name_b))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(enc nonce_a nonce_b name_b (pubk name_a))</title>
+   <circle style='fill: red;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc nonce_a name_a (pubk name_b))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((nonce_a nonce_a) (nonce_b nonce_b) (name_a name_a) (name_b name_b))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>initiator</text>
+   </g>
+  <text x='39.960' y='39.960' style='text-anchor: middle;'>ns 0</text>
+  </svg></div>
+
+<pre>(defskeleton ns
+  (vars (nonce_a nonce_b data) (name_a name_b name))
+  (defstrand initiator 3 (nonce_a nonce_a) (nonce_b nonce_b)
+    (name_a name_a) (name_b name_b))
+  (non-orig (privk name_a) (privk name_b))
+  (uniq-orig nonce_a)
+  (traces
+    ((send (enc nonce_a name_a (pubk name_b)))
+      (recv (enc nonce_a nonce_b name_b (pubk name_a)))
+      (send (enc nonce_b (pubk name_b)))))
+  (label 0)
+  (unrealized (0 1))
+  (origs (nonce_a (0 0)))
+  (comment &quot;1 in cohort - 1 not yet seen&quot;))</pre>
+
+<p id="k2">Item <a href="#t0">2</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 304.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 139.920 189.960 Q 92.940 189.960 45.960 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc nonce_a nonce_b name_b (pubk name_a))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(enc nonce_a name_a (pubk name_b))</title>
+   <circle style='fill: blue;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(enc nonce_b (pubk name_b))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(enc nonce_a nonce_b name_b (pubk name_a))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <path
+   d='M 39.960 114.960 Q 86.940 114.960 133.920 114.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc nonce_a name_a (pubk name_b))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((nonce_a nonce_a) (nonce_b nonce_b) (name_a name_a) (name_b name_b))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>responder</text>
+   </g>
+  <g>
+   <title>((nonce_a nonce_a) (nonce_b nonce_b) (name_a name_a) (name_b name_b))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>initiator</text>
+   </g>
+  <text x='89.940' y='39.960' style='text-anchor: middle;'>ns 2</text>
+  </svg></div>
+
+<pre>(defskeleton ns
+  (vars (nonce_a nonce_b data) (name_a name_b name))
+  (defstrand initiator 3 (nonce_a nonce_a) (nonce_b nonce_b)
+    (name_a name_a) (name_b name_b))
+  (defstrand responder 2 (nonce_a nonce_a) (nonce_b nonce_b)
+    (name_a name_a) (name_b name_b))
+  (precedes ((0 0) (1 0)) ((1 1) (0 1)))
+  (non-orig (privk name_a) (privk name_b))
+  (uniq-orig nonce_a)
+  (operation nonce-test (contracted (nonce_b-0 nonce_b)) nonce_a (0 1)
+    (enc nonce_a name_a (pubk name_b))
+    (enc nonce_a nonce_b name_b (pubk name_a)))
+  (strand-map 0 1)
+  (traces
+    ((send (enc nonce_a name_a (pubk name_b)))
+      (recv (enc nonce_a nonce_b name_b (pubk name_a)))
+      (send (enc nonce_b (pubk name_b))))
+    ((recv (enc nonce_a name_a (pubk name_b)))
+      (send (enc nonce_a nonce_b name_b (pubk name_a)))))
+  (label 2)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((name_a name_a) (name_b name_b) (nonce_a nonce_a)
+        (nonce_b nonce_b))))
+  (origs (nonce_a (0 0))))</pre>
+
+<p id="t3">Tree <a href="#top">3</a>, POV <a href="#k3">3</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='79.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 79.920' font-size='12.000'>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k4&quot;, &quot;_self&quot;)'>4</text>
+  <line
+   x1='39.960' y1='39.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='26.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k3&quot;, &quot;_self&quot;)'>3</text>
+  </svg></div>
+
+<pre>(defprotocol ns basic
+  (defrole initiator
+    (vars (nonce_a nonce_b data) (name_a name_b name))
+    (trace (send (enc nonce_a name_a (pubk name_b)))
+      (recv (enc nonce_a nonce_b name_b (pubk name_a)))
+      (send (enc nonce_b (pubk name_b)))))
+  (defrole responder
+    (vars (nonce_a nonce_b data) (name_a name_b name))
+    (trace (recv (enc nonce_a name_a (pubk name_b)))
+      (send (enc nonce_a nonce_b name_b (pubk name_a)))
+      (recv (enc nonce_b (pubk name_b)))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))</pre>
+
+<p id="k3">Item <a href="#t3">3</a>, Child: <a href="#k4">4</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 304.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>(enc nonce_b (pubk name_b))</title>
+   <circle style='fill: red;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(enc nonce_a nonce_b name_b (pubk name_a))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc nonce_a name_a (pubk name_b))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((nonce_a nonce_a) (nonce_b nonce_b) (name_a name_a) (name_b name_b))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>responder</text>
+   </g>
+  <text x='39.960' y='39.960' style='text-anchor: middle;'>ns 3</text>
+  </svg></div>
+
+<pre>(defskeleton ns
+  (vars (nonce_b nonce_a data) (name_a name_b name))
+  (defstrand responder 3 (nonce_a nonce_a) (nonce_b nonce_b)
+    (name_a name_a) (name_b name_b))
+  (non-orig (privk name_a) (privk name_b))
+  (uniq-orig nonce_b)
+  (traces
+    ((recv (enc nonce_a name_a (pubk name_b)))
+      (send (enc nonce_a nonce_b name_b (pubk name_a)))
+      (recv (enc nonce_b (pubk name_b)))))
+  (label 3)
+  (unrealized (0 2))
+  (origs (nonce_b (0 1)))
+  (comment &quot;1 in cohort - 1 not yet seen&quot;))</pre>
+
+<p id="k4">Item <a href="#t3">4</a>, Parent: <a href="#k3">3</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 304.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 139.920 264.960 Q 92.940 264.960 45.960 264.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc nonce_b (pubk name_b))</title>
+   <circle cx='139.920' cy='264.960' r='6.000'/></g>
+  <g><title>(enc nonce_a nonce_b name_b (pubk name_a))</title>
+   <circle style='fill: blue;' cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(enc nonce_a name_a (pubk name_b))</title>
+   <circle cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(enc nonce_b (pubk name_b))</title>
+   <circle style='fill: blue;' cx='39.960' cy='264.960' r='6.000'/></g>
+  <path
+   d='M 39.960 189.960 Q 86.940 189.960 133.920 189.960'
+   style='stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc nonce_a nonce_b name_b (pubk name_a))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc nonce_a name_a (pubk name_b))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g>
+   <title>((nonce_a nonce_a) (nonce_b nonce_b) (name_a name_a) (name_b name_b))</title>
+   <text
+    x='139.920' y='77.460' style='text-anchor: middle;'>initiator</text>
+   </g>
+  <g>
+   <title>((nonce_a nonce_a) (nonce_b nonce_b) (name_a name_a) (name_b name_b))</title>
+   <text
+    x='39.960' y='77.460' style='text-anchor: middle;'>responder</text>
+   </g>
+  <text x='89.940' y='39.960' style='text-anchor: middle;'>ns 4</text>
+  </svg></div>
+
+<pre>(defskeleton ns
+  (vars (nonce_b nonce_a data) (name_a name_b name))
+  (defstrand responder 3 (nonce_a nonce_a) (nonce_b nonce_b)
+    (name_a name_a) (name_b name_b))
+  (defstrand initiator 3 (nonce_a nonce_a) (nonce_b nonce_b)
+    (name_a name_a) (name_b name_b))
+  (precedes ((0 1) (1 1)) ((1 2) (0 2)))
+  (non-orig (privk name_a) (privk name_b))
+  (uniq-orig nonce_b)
+  (operation nonce-test (added-strand initiator 3) nonce_b (0 2)
+    (enc nonce_a nonce_b name_b (pubk name_a)))
+  (strand-map 0)
+  (traces
+    ((recv (enc nonce_a name_a (pubk name_b)))
+      (send (enc nonce_a nonce_b name_b (pubk name_a)))
+      (recv (enc nonce_b (pubk name_b))))
+    ((send (enc nonce_a name_a (pubk name_b)))
+      (recv (enc nonce_a nonce_b name_b (pubk name_a)))
+      (send (enc nonce_b (pubk name_b)))))
+  (label 4)
+  (parent 3)
+  (realized)
+  (shape)
+  (maps
+    ((0)
+      ((name_a name_a) (name_b name_b) (nonce_b nonce_b)
+        (nonce_a nonce_a))))
+  (origs (nonce_b (0 1))))</pre>
+
+</body>
+</html>
