@@ -9,24 +9,26 @@
     (defrole init
     (vars (m c data) (a b name))
     (trace 
-        (send (enc m (cat (pubk b)) (enc m (privk a))))
-        (recv (enc c (cat (pubk a)) (enc c (privk b))))
+        (send (enc (enc m (privk a)) (pubk b)))
+        (recv (enc  (enc c (privk b)) (pubk a)))
     ))
+
     ;; Resp def
     (defrole resp
     (vars (m c data) (a b name))
     (trace
-        (recv (enc m (cat (pubk b)) (enc m (privk a))))
-        (send (enc c (cat (pubk a)) (enc c (privk b))))
+        (recv (enc (enc m (privk a)) (pubk b) ))
+        (send  (enc c (enc c (privk b)) (pubk a)))
     ))
-    
-)
+ )   
+
+
 
 
 ;; Init Skel
 (defskeleton akeela
     (vars (a b name) (m data))
-    (defstrand init 2 (a a) (b b) (m m))
+    (defstrandmax init  (a a) (b b) (m m))
     (non-orig (privk a) (privk b))
     (uniq-orig m)
 )
@@ -34,7 +36,7 @@
 ;; Resp Skel
 (defskeleton akeela
     (vars (a b name) (c data))
-    (defstrand resp 2 (a a) (b b) (c c))
+    (defstrandmax resp  (a a) (b b) (c c)
     (non-orig (privk a) (privk b))
     (uniq-orig c)
 )

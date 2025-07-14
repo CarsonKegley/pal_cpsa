@@ -1,0 +1,494 @@
+<?xml version="1.0"?>
+<!-- CPSA 4.4.6 -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>Akeela Protocol</title>
+ <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+ <style>
+  svg.diagram { border-width: 1px; border-style: solid }
+ </style>
+</head>
+<body>
+
+<pre>(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;Extracted shapes&quot;)
+(herald &quot;Akeela Protocol&quot; (comment &quot;AP&quot;))
+(comment &quot;CPSA 4.4.6&quot;)
+(comment &quot;All input read from akeela.scm&quot;)</pre>
+
+<p id="top">Trees: <a href="#t0">0</a> <a href="#t4">4</a>.</p>
+
+<p id="t0">Tree <a href="#top">0</a>, POV <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 229.920' font-size='12.000'>
+  <text
+   x='89.880' y='176.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k3&quot;, &quot;_self&quot;)'>3</text>
+  <line
+   x1='39.960' y1='114.960' x2='89.880' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='101.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k2&quot;, &quot;_self&quot;)'>2</text>
+  <line
+   x1='39.960' y1='114.960' x2='89.880' y2='114.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k1&quot;, &quot;_self&quot;)'>1</text>
+  <line
+   x1='39.960' y1='114.960' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='101.040' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k0&quot;, &quot;_self&quot;)'>0</text>
+  </svg></div>
+
+<pre>(defprotocol akeela basic
+  (defrole init
+    (vars (m c data) (a b name))
+    (trace (send (enc (enc m (privk a)) (pubk b)))
+      (recv (enc (enc c (privk b)) (pubk a)))))
+  (defrole resp
+    (vars (m c data) (a b name))
+    (trace (recv (enc (enc m (privk a)) (pubk b)))
+      (send (enc c (enc c (privk b)) (pubk a)))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))</pre>
+
+<p id="k0">Item <a href="#t0">0</a>, Children: <a href="#k1">1</a> <a href="#k2">2</a> <a href="#k3">3</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 229.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>(enc (enc c (privk b)) (pubk a))</title>
+   <circle style='fill: red;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m (privk a)) (pubk b))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((m m) (c c) (a a) (b b))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>init</text>
+   </g>
+  <text
+   x='39.960' y='39.960' style='text-anchor: middle;'>akeela 0</text>
+  </svg></div>
+
+<pre>(defskeleton akeela
+  (vars (m c data) (a b name))
+  (defstrand init 2 (m m) (c c) (a a) (b b))
+  (non-orig (privk a) (privk b))
+  (uniq-orig m)
+  (traces
+    ((send (enc (enc m (privk a)) (pubk b)))
+      (recv (enc (enc c (privk b)) (pubk a)))))
+  (label 0)
+  (unrealized (0 1))
+  (origs (m (0 0)))
+  (comment &quot;3 in cohort - 3 not yet seen&quot;))</pre>
+
+<p id="k1">Item <a href="#t0">1</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 229.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>(enc (enc m (privk a)) (pubk a))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m (privk a)) (pubk a))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((m m) (c m) (a a) (b a))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>init</text>
+   </g>
+  <text
+   x='39.960' y='39.960' style='text-anchor: middle;'>akeela 1</text>
+  </svg></div>
+
+<pre>(defskeleton akeela
+  (vars (m data) (a name))
+  (defstrand init 2 (m m) (c m) (a a) (b a))
+  (non-orig (privk a))
+  (uniq-orig m)
+  (operation encryption-test (displaced 1 0 init 1) (enc c (privk b))
+    (0 1))
+  (strand-map 0)
+  (traces
+    ((send (enc (enc m (privk a)) (pubk a)))
+      (recv (enc (enc m (privk a)) (pubk a)))))
+  (label 1)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps ((0) ((a a) (b a) (m m) (c m))))
+  (origs (m (0 0))))</pre>
+
+<p id="k2">Item <a href="#t0">2</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 229.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='114.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 139.920 114.960 Q 92.340 150.660 44.759 186.359'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc (enc c (privk b)) (pubk b-0))</title>
+   <circle cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(enc (enc c (privk b)) (pubk a))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m (privk a)) (pubk b))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((m c) (a b) (b b-0))</title>
+   <text x='139.920' y='77.460' style='text-anchor: middle;'>init</text>
+   </g>
+  <g><title>((m m) (c c) (a a) (b b))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>init</text>
+   </g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>akeela 2</text>
+  </svg></div>
+
+<pre>(defskeleton akeela
+  (vars (m c data) (a b b-0 name))
+  (defstrand init 2 (m m) (c c) (a a) (b b))
+  (defstrand init 1 (m c) (a b) (b b-0))
+  (precedes ((1 0) (0 1)))
+  (non-orig (privk a) (privk b))
+  (uniq-orig m)
+  (operation encryption-test (added-strand init 1) (enc c (privk b))
+    (0 1))
+  (strand-map 0)
+  (traces
+    ((send (enc (enc m (privk a)) (pubk b)))
+      (recv (enc (enc c (privk b)) (pubk a))))
+    ((send (enc (enc c (privk b)) (pubk b-0)))))
+  (label 2)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps ((0) ((a a) (b b) (m m) (c c))))
+  (origs (m (0 0))))</pre>
+
+<p id="k3">Item <a href="#t0">3</a>, Parent: <a href="#k0">0</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 229.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 139.920 189.960 Q 92.940 189.960 45.960 189.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc c (enc c (privk b)) (pubk a-0))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m-0 (privk a-0)) (pubk b))</title>
+   <circle style='fill: blue;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(enc (enc c (privk b)) (pubk a))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m (privk a)) (pubk b))</title>
+   <circle cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((m m-0) (c c) (a a-0) (b b))</title>
+   <text x='139.920' y='77.460' style='text-anchor: middle;'>resp</text>
+   </g>
+  <g><title>((m m) (c c) (a a) (b b))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>init</text>
+   </g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>akeela 3</text>
+  </svg></div>
+
+<pre>(defskeleton akeela
+  (vars (m c m-0 data) (a b a-0 name))
+  (defstrand init 2 (m m) (c c) (a a) (b b))
+  (defstrand resp 2 (m m-0) (c c) (a a-0) (b b))
+  (precedes ((1 1) (0 1)))
+  (non-orig (privk a) (privk b))
+  (uniq-orig m)
+  (operation encryption-test (added-strand resp 2) (enc c (privk b))
+    (0 1))
+  (strand-map 0)
+  (traces
+    ((send (enc (enc m (privk a)) (pubk b)))
+      (recv (enc (enc c (privk b)) (pubk a))))
+    ((recv (enc (enc m-0 (privk a-0)) (pubk b)))
+      (send (enc c (enc c (privk b)) (pubk a-0)))))
+  (label 3)
+  (parent 0)
+  (realized)
+  (shape)
+  (maps ((0) ((a a) (b b) (m m) (c c))))
+  (origs (m (0 0))))</pre>
+
+<p id="t4">Tree <a href="#top">4</a>, POV <a href="#k4">4</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='129.840pt' height='154.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 129.840 154.920' font-size='12.000'>
+  <text
+   x='89.880' y='101.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k6&quot;, &quot;_self&quot;)'>6</text>
+  <line
+   x1='39.960' y1='77.460' x2='89.880' y2='114.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='89.880' y='26.040'
+   style='font-weight: bold; text-anchor: middle; fill: blue;'
+   onclick='window.open(&quot;#k5&quot;, &quot;_self&quot;)'>5</text>
+  <line
+   x1='39.960' y1='77.460' x2='89.880' y2='39.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <text
+   x='39.960' y='63.540' style='text-anchor: middle; fill: black;'
+   onclick='window.open(&quot;#k4&quot;, &quot;_self&quot;)'>4</text>
+  </svg></div>
+
+<pre>(defprotocol akeela basic
+  (defrole init
+    (vars (m c data) (a b name))
+    (trace (send (enc (enc m (privk a)) (pubk b)))
+      (recv (enc (enc c (privk b)) (pubk a)))))
+  (defrole resp
+    (vars (m c data) (a b name))
+    (trace (recv (enc (enc m (privk a)) (pubk b)))
+      (send (enc c (enc c (privk b)) (pubk a)))))
+  (defgenrule neqRl_indx
+    (forall ((x indx)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_strd
+    (forall ((x strd)) (implies (fact neq x x) (false))))
+  (defgenrule neqRl_mesg
+    (forall ((x mesg)) (implies (fact neq x x) (false)))))</pre>
+
+<p id="k4">Item <a href="#t4">4</a>, Children: <a href="#k5">5</a> <a href="#k6">6</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='79.920pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 79.920 229.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <g><title>(enc c (enc c (privk b)) (pubk a))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m (privk a)) (pubk b))</title>
+   <circle style='fill: red;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((m m) (c c) (a a) (b b))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>resp</text>
+   </g>
+  <text
+   x='39.960' y='39.960' style='text-anchor: middle;'>akeela 4</text>
+  </svg></div>
+
+<pre>(defskeleton akeela
+  (vars (c m data) (a b name))
+  (defstrand resp 2 (m m) (c c) (a a) (b b))
+  (non-orig (privk a) (privk b))
+  (uniq-orig c)
+  (traces
+    ((recv (enc (enc m (privk a)) (pubk b)))
+      (send (enc c (enc c (privk b)) (pubk a)))))
+  (label 4)
+  (unrealized (0 0))
+  (origs (c (0 1)))
+  (comment &quot;2 in cohort - 2 not yet seen&quot;))</pre>
+
+<p id="k5">Item <a href="#t4">5</a>, Parent: <a href="#k4">4</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='229.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 229.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='114.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='114.960' x2='39.960' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 139.920 114.960 Q 92.940 114.960 45.960 114.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc (enc m (privk a)) (pubk b-0))</title>
+   <circle cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(enc c (enc c (privk b)) (pubk a))</title>
+   <circle cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m (privk a)) (pubk b))</title>
+   <circle style='fill: blue;' cx='39.960' cy='114.960' r='6.000'/></g>
+  <g><title>((m m) (a a) (b b-0))</title>
+   <text x='139.920' y='77.460' style='text-anchor: middle;'>init</text>
+   </g>
+  <g><title>((m m) (c c) (a a) (b b))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>resp</text>
+   </g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>akeela 5</text>
+  </svg></div>
+
+<pre>(defskeleton akeela
+  (vars (c m data) (a b b-0 name))
+  (defstrand resp 2 (m m) (c c) (a a) (b b))
+  (defstrand init 1 (m m) (a a) (b b-0))
+  (precedes ((1 0) (0 0)))
+  (non-orig (privk a) (privk b))
+  (uniq-orig c)
+  (operation encryption-test (added-strand init 1) (enc m (privk a))
+    (0 0))
+  (strand-map 0)
+  (traces
+    ((recv (enc (enc m (privk a)) (pubk b)))
+      (send (enc c (enc c (privk b)) (pubk a))))
+    ((send (enc (enc m (privk a)) (pubk b-0)))))
+  (label 5)
+  (parent 4)
+  (realized)
+  (shape)
+  (maps ((0) ((a a) (b b) (c c) (m m))))
+  (origs (c (0 1))))</pre>
+
+<p id="k6">Item <a href="#t4">6</a>, Parent: <a href="#k4">4</a>.</p>
+
+<div>
+ <svg
+  class='diagram' width='179.880pt' height='304.920pt'
+  xmlns='http://www.w3.org/2000/svg' version='1.1'
+  viewBox='0 0 179.880 304.920' font-size='12.000'>
+  <defs>
+   <marker
+    id='arrow' orient='auto' markerWidth='5' markerHeight='10' refX='5'
+    refY='5'>
+    <path
+     d='M 0 0 5 5 0 10'
+     style='stroke-width: 2; fill: none; stroke: black;'/></marker>
+   </defs>
+  <line
+   x1='139.920' y1='114.960' x2='139.920' y2='189.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <line
+   x1='39.960' y1='189.960' x2='39.960' y2='264.960'
+   style='stroke-width: 0.960; stroke: gray;'/>
+  <path
+   d='M 139.920 189.960 Q 92.940 189.960 45.960 189.960'
+   style='stroke-dasharray: 6.000,2.400; stroke-width: 0.960; stroke: black; marker-end: url(#arrow); fill: none;'/>
+  <g><title>(enc m (enc m (privk a)) (pubk a-0))</title>
+   <circle cx='139.920' cy='189.960' r='6.000'/></g>
+  <g><title>(enc (enc m-0 (privk a-0)) (pubk a))</title>
+   <circle style='fill: blue;' cx='139.920' cy='114.960' r='6.000'/></g>
+  <g><title>(enc c (enc c (privk b)) (pubk a))</title>
+   <circle cx='39.960' cy='264.960' r='6.000'/></g>
+  <g><title>(enc (enc m (privk a)) (pubk b))</title>
+   <circle style='fill: blue;' cx='39.960' cy='189.960' r='6.000'/></g>
+  <g><title>((m m-0) (c m) (a a-0) (b a))</title>
+   <text x='139.920' y='77.460' style='text-anchor: middle;'>resp</text>
+   </g>
+  <g><title>((m m) (c c) (a a) (b b))</title>
+   <text x='39.960' y='77.460' style='text-anchor: middle;'>resp</text>
+   </g>
+  <text
+   x='89.940' y='39.960' style='text-anchor: middle;'>akeela 6</text>
+  </svg></div>
+
+<pre>(defskeleton akeela
+  (vars (c m m-0 data) (a b a-0 name))
+  (defstrand resp 2 (m m) (c c) (a a) (b b))
+  (defstrand resp 2 (m m-0) (c m) (a a-0) (b a))
+  (precedes ((1 1) (0 0)))
+  (non-orig (privk a) (privk b))
+  (uniq-orig c)
+  (operation encryption-test (added-strand resp 2) (enc m (privk a))
+    (0 0))
+  (strand-map 0)
+  (traces
+    ((recv (enc (enc m (privk a)) (pubk b)))
+      (send (enc c (enc c (privk b)) (pubk a))))
+    ((recv (enc (enc m-0 (privk a-0)) (pubk a)))
+      (send (enc m (enc m (privk a)) (pubk a-0)))))
+  (label 6)
+  (parent 4)
+  (realized)
+  (shape)
+  (maps ((0) ((a a) (b b) (c c) (m m))))
+  (origs (c (0 1))))</pre>
+
+</body>
+</html>
